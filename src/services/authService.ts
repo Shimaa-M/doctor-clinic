@@ -16,6 +16,7 @@ export const loginUserWithEmailAndPassword = async (email: string, password: str
   }
   return user;
 };
+
 export const generateJwtAccessToken=(record:IUserReq): { accessToken: string } =>{
     const payload: JwtPayload = { id: record._id };
     const accessToken = jwt.sign(payload, config.jwt.secret,{

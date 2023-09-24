@@ -8,7 +8,7 @@ const patientStateSchema =new mongoose.Schema({
   doctortId: {
     type: mongoose.Types.ObjectId,
   },
-    note: String,
+    notes: String,
     message: String,
     tratmentSession:Date,
   createdAt: {

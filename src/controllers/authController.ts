@@ -27,23 +27,21 @@ export const logout = catchAsync(async (req: Request, res: Response) => {
 });
 export const restrictTo = (...roles:string[]) => {
   return async(req: Request, res: Response, next: NextFunction) => {
-    const token:string = req.headers['authorization']? req.headers.authorization.split(' ')[1]:"nothing";
+    const token:string = req.headers['authorization']? req.headers.authorization.split(' ')[1]:"";
 
     
       const decodedToken = jwt.verify(token, config.jwt.secret);
       console.log(decodedToken)
       req.user = decodedToken;
     if (!decodedToken) return res.sendStatus(401);
-      const currentUser = await User.findById(req.user.id)
+      const user = await User.findById(req.user.id)
     // Check the user's role.
-    console.log(currentUser)
-    if (currentUser) {
-      if (currentUser.role != 'DOCTOR') {
+    console.log(user)
+    if (req.user.role != 'DOCTOR') {
         
         // The user is not authorized to access this route.
         return res.sendStatus(403);
       }
-    }
     // The user is logged in and authorized to access this route.
     next();
   }
